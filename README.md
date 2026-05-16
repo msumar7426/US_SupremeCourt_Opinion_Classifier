@@ -1,74 +1,57 @@
-# 🏛️ US Supreme Court Opinion Classification — NLP Semester Project
+# 🏛️ US Supreme Court Opinion Classifier
 
-## Project Overview
-
-This project classifies **US Supreme Court opinions** into **14 legal issue areas** using four different NLP approaches, comparing their performance on the same benchmark dataset.
+An AI-powered application that classifies **US Supreme Court opinions** into **14 legal issue areas** using a fine-tuned **LegalBERT** transformer model.
 
 **🚀 Live Demo:** [Hugging Face Space](https://huggingface.co/spaces/msumar/NLP-Semester-Project)
 
-**Dataset:** [LexGLUE SCOTUS](https://huggingface.co/datasets/coastalcph/lex_glue) — A legal NLP benchmark from HuggingFace containing ~7,800+ Supreme Court opinions.
+---
 
-## 14 Issue Area Classes
+## ⚖️ How it Works
+The model is fine-tuned on the **LexGLUE SCOTUS** dataset, a benchmark for legal NLP. It analyzes the text of a court opinion and predicts which of the 14 legal issue areas it belongs to (e.g., Criminal Procedure, Civil Rights, First Amendment).
 
-| ID | Issue Area | ID | Issue Area |
-|----|------------|----|------------|
-| 0 | Criminal Procedure | 7 | Economic Activity |
-| 1 | Civil Rights | 8 | Judicial Power |
-| 2 | First Amendment | 9 | Federalism |
-| 3 | Due Process | 10 | Interstate Relations |
-| 4 | Privacy | 11 | Federal Taxation |
-| 5 | Attorneys | 12 | Miscellaneous |
-| 6 | Unions | 13 | Private Action |
+### 14 Issue Areas
+- Criminal Procedure
+- Civil Rights
+- First Amendment
+- Due Process
+- Privacy
+- Attorneys
+- Unions
+- Economic Activity
+- Judicial Power
+- Federalism
+- Interstate Relations
+- Federal Taxation
+- Miscellaneous
+- Private Action
 
-## Methodology — 4 Approaches Compared
+---
 
-| # | Approach | Models | Feature Extraction |
-|---|----------|--------|--------------------|
-| 1 | **Classical ML** | Logistic Regression, SVM, Random Forest | TF-IDF (unigrams + bigrams) |
-| 2 | **Deep Learning** | BiLSTM with Attention | Learned word embeddings |
-| 3 | **Transformer** | DistilBERT (fine-tuned) | Contextual embeddings |
-| 4 | **Domain Transformer** | LegalBERT (fine-tuned) | Legal-domain embeddings |
+## 🚀 How to Run
 
-## Evaluation Metrics
+### 1. Model Training (Google Colab)
+If you want to re-train the model:
+1. Upload `train.py` to [Google Colab](https://colab.research.google.com/).
+2. Set Runtime to **GPU (T4)**.
+3. Run the script to save the model to `./saved_model`.
 
-- Accuracy
-- Macro F1-Score (handles class imbalance)
-- Micro F1-Score
-- Per-class Precision, Recall, F1
-- Confusion Matrices
-
-## How to Run
-
-### Google Colab (Recommended for Training)
-1. Open [Google Colab](https://colab.research.google.com/)
-2. Upload `train.py`
-3. Go to **Runtime → Change runtime type → GPU (T4)**
-4. Run the script to fine-tune LegalBERT and save the model.
-
-### Local Deployment
+### 2. Local Deployment (Flask)
+To run the web app locally:
 1. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-2. Run the Flask app:
-```bash
-python app.py
-```
-3. Open `http://localhost:7860` in your browser.
+   ```bash
+   pip install -r requirements.txt
+   ```
+2. Start the server:
+   ```bash
+   python app.py
+   ```
+3. Visit `http://localhost:7860` in your browser.
 
-## Computational Resources
-- **Platform:** Google Colab (free tier)
-- **GPU:** Tesla T4 (16GB VRAM)
-- **Estimated Runtime:** ~45-60 minutes total
+---
 
-## Project Structure
-```
-├── app.py              # Flask web application
-├── train.py            # Model training script (LegalBERT)
-├── Dockerfile          # Container configuration for deployment
-├── requirements.txt    # Python dependencies
-├── README.md           # Project documentation
-├── saved_model/        # Fine-tuned model weights (LegalBERT)
-├── static/             # Frontend assets (CSS/JS)
-└── templates/          # HTML templates (Flask)
-```
+## 📂 Project Structure
+- `app.py`: Flask backend for inference.
+- `train.py`: Training script for LegalBERT.
+- `saved_model/`: Directory containing fine-tuned model weights.
+- `static/` & `templates/`: Frontend files (HTML/CSS/JS).
+- `Dockerfile`: Configuration for containerized deployment.
