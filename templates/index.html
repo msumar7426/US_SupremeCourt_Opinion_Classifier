@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supreme Court Opinion Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-gradient"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-icon">🏛️</div>
+            <h1>Supreme Court Opinion Classifier</h1>
+            <p>AI-powered classification of US Supreme Court opinions into 14 legal issue areas using a fine-tuned LegalBERT transformer model.</p>
+            <div class="badge-row">
+                <span class="badge">Flask Backend</span>
+                <span class="badge">LegalBERT</span>
+                <span class="badge">14 Classes</span>
+            </div>
+        </div>
+
+        <!-- Input Card -->
+        <div class="card">
+            <div class="card-title">📝 Input Court Opinion Text</div>
+            <div class="textarea-wrapper">
+                <textarea id="inputText" placeholder="Paste a US Supreme Court opinion or legal text here to classify its issue area..."></textarea>
+                <div class="char-count" id="charCount">0 chars</div>
+            </div>
+            <div class="btn-row">
+                <button class="btn btn-primary" id="classifyBtn">
+                    <span>⚡</span> Classify Opinion
+                </button>
+                <button class="btn btn-secondary" id="clearBtn">Clear</button>
+            </div>
+        </div>
+
+        <!-- Sample Texts -->
+        <div class="card">
+            <div class="card-title">💡 Try Sample Texts</div>
+            <div class="samples">
+                <div class="sample-btn" data-sample="0">
+                    <span class="sample-label">Criminal Procedure</span>
+                    Fifth Amendment self-incrimination rights and suppression of evidence...
+                </div>
+                <div class="sample-btn" data-sample="1">
+                    <span class="sample-label">Civil Rights</span>
+                    Title VII racial discrimination in employment promotion...
+                </div>
+                <div class="sample-btn" data-sample="2">
+                    <span class="sample-label">First Amendment</span>
+                    Prior restraint on political speech and press freedom...
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Analyzing legal text...</p>
+        </div>
+
+        <!-- Error -->
+        <div class="error-msg" id="errorMsg"></div>
+
+        <!-- Results -->
+        <div class="results" id="results">
+            <div class="card">
+                <div class="card-title">🎯 Classification Results</div>
+                <div class="top-prediction" id="topPrediction"></div>
+                <div id="predictionsList"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Built with Flask, Transformers & LegalBERT · NLP Semester Project</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

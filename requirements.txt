@@ -1,0 +1,8 @@
+flask
+transformers
+torch
+accelerate
+scikit-learn
+evaluate
+datasets
+gunicorn
