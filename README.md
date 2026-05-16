@@ -4,6 +4,8 @@
 
 This project classifies **US Supreme Court opinions** into **14 legal issue areas** using four different NLP approaches, comparing their performance on the same benchmark dataset.
 
+**🚀 Live Demo:** [Hugging Face Space](https://huggingface.co/spaces/msumar/NLP-Semester-Project)
+
 **Dataset:** [LexGLUE SCOTUS](https://huggingface.co/datasets/coastalcph/lex_glue) — A legal NLP benchmark from HuggingFace containing ~7,800+ Supreme Court opinions.
 
 ## 14 Issue Area Classes
