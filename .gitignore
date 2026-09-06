@@ -38,3 +38,6 @@ Icon
 .Spotlight-V100
 .Trashes
 config.plist
+
+# Training checkpoints
+checkpoints/

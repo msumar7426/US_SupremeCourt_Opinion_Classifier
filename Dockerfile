@@ -1,34 +1,34 @@
-# Use an official Python runtime as a parent image
 FROM python:3.12-slim
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Install system dependencies (needed for some ML libraries)
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
 
-# Copy the requirements file into the container
+# Copied before the source so the expensive pip layer stays cached when only
+# application code changes.
 COPY requirements.txt .
 
-# Install any needed packages specified in requirements.txt
+# Every pinned dependency resolves to a prebuilt manylinux wheel on CPython 3.12,
+# so no compiler toolchain is needed.
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the current directory contents into the container at /app
-COPY . .
-
-# Create a non-privileged user to run the app (recommended for HF Spaces)
+# Hugging Face Spaces expects the application to run as UID 1000.
 RUN useradd -m -u 1000 user
+
+# --chown is required. A plain COPY preserves the source file mode, so files
+# that are not world readable on the build machine stay unreadable to this
+# non-root user and gunicorn fails to import app.py.
+COPY --chown=user:user . .
+
 USER user
 ENV HOME=/home/user \
-    PATH=/home/user/.local/bin:$PATH
+    PATH=/home/user/.local/bin:$PATH \
+    HF_HOME=/home/user/.cache/huggingface
 
-# Set working directory to the app folder
-WORKDIR /app
-
-# The port HF Spaces uses
 EXPOSE 7860
 
-# Run the application using Gunicorn for production
-CMD ["gunicorn", "-b", "0.0.0.0:7860", "app:app"]
+# One worker keeps a single copy of the 140 MB model in memory. Threads let
+# requests overlap because PyTorch releases the GIL during the forward pass.
+# The default 30s timeout is too tight for a long CPU forward pass.
+CMD ["gunicorn", "-b", "0.0.0.0:7860", "--workers", "1", "--threads", "4", "--timeout", "120", "app:app"]

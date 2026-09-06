@@ -1,0 +1,6 @@
+# Training-only dependencies, for Google Colab. Not installed in the serving image.
+#     pip install -r requirements-train.txt
+-r requirements.txt
+datasets==5.0.1
+scikit-learn==1.9.0
+accelerate==1.14.0
