@@ -41,3 +41,10 @@ config.plist
 
 # Training checkpoints
 checkpoints/
+
+# Internal audit/teaching notes: kept on disk for learning, not part of the app
+PROJECT_ARCHITECTURE.md
+TRAINING_AND_MODEL.md
+DATA_FLOW.md
+PROJECT_AUDIT.md
+INTERVIEW_CHEAT_SHEET.md
